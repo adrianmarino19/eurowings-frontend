@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-
+st.title("Predict")
 
 # URL of the logo image
 logo_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Eurowings_Logo.svg"

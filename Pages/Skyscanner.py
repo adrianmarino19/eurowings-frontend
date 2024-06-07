@@ -1,7 +1,7 @@
 import streamlit as st
 
 
-st.title("Skyscanner API Dashboard")
+st.title("Skyscanner")
 # URL of the logo image
 logo_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Eurowings_Logo.svg"
 # Display the logo
