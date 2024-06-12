@@ -1,9 +1,9 @@
 import streamlit as st
+import requests
 
-# URL of the logo image
-logo_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Eurowings_Logo.svg"
+
+st.title("Home")
 # Display the logo
-st.image(logo_url, width=400)
 
 st.write("Hello!!!!!!")
 
