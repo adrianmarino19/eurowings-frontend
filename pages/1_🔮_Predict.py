@@ -21,7 +21,7 @@ st.write("Provide flight details to get price predictions for your competitors' 
 st.write("---")
 
 # Create four columns
-col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
 Origin_Airports = [
  'AAE - Annaba',
  'AAL - Aalborg',
@@ -611,6 +611,7 @@ Origin_Airports = [
  'ZRH - Zurich',
  'ZTH - Zakinthos'
 ]
+Origin_Airports = [i[:3] for i in Origin_Airports]
 
 destination_airports = [
  'AAE - Annaba',
@@ -1201,6 +1202,7 @@ destination_airports = [
  'ZRH - Zurich',
  'ZTH - Zakinthos'
 ]
+destination_airports = [i[:3] for i in destination_airports]
 
 date_input_key1 = 'date_input_1'
 date_input_key2 = 'date_input_2'
@@ -1221,7 +1223,45 @@ with col3:
 
 with col4:
     # Dropdown with options
-    text_input_4 = st.selectbox("Airline",
+    text_input_4 = st.selectbox(
+        "Trip Type",
+        ["ONE WAY", "RETURN"]
+    )
+
+with col5:
+    # Dropdown with options
+    text_input_5 = st.selectbox(
+        "Connection Flight",
+        ["0", "1"]
+    )
+
+with col6:
+    # Dropdown with options
+    text_input_6 = st.text_input(
+        "Trip Length",
+    )
+
+with col7:
+    text_input_7 = st.date_input(
+        "Prediction Date",
+        key=date_input_key2,
+        value=date.today(),  # Default to today's date
+        min_value=date(1900, 1, 1),  # Minimum date
+        max_value=date(2100, 12, 31)  # Maximum date
+    )
+
+with col8:
+    text_input_8 = st.date_input(
+        "Flight Date",
+        key=date_input_key1,
+        value=date.today(),  # Default to today's date
+        min_value=date(1900, 1, 1),  # Minimum date
+        max_value=date(2100, 12, 31)  # Maximum date
+    )
+
+with col9:
+    # Dropdown with options
+    text_input_9 = st.selectbox("Airline",
         ["FR - Ryanair",
         "U2 - easyJet",
         "VY - Vueling",
@@ -1242,31 +1282,6 @@ with col4:
         "OS - Austrian Airlines",
         "W9 - Wizz Air UK",
         "HV - Transavia"]
-    )
-
-with col5:
-    text_input_5 = st.date_input(
-        "Flight Date",
-        key=date_input_key1,
-        value=date.today(),  # Default to today's date
-        min_value=date(1900, 1, 1),  # Minimum date
-        max_value=date(2100, 12, 31)  # Maximum date
-    )
-
-with col6:
-    text_input_6 = st.date_input(
-        "Prediction Date",
-        key=date_input_key2,
-        value=date.today(),  # Default to today's date
-        min_value=date(1900, 1, 1),  # Minimum date
-        max_value=date(2100, 12, 31)  # Maximum date
-    )
-
-with col7:
-    # Dropdown with options
-    text_input_7 = st.selectbox(
-        "Trip Type",
-        ["ONE WAY", "RETURN"]
     )
 
 # Button
