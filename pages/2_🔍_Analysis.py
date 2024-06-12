@@ -1,9 +1,16 @@
 import streamlit as st
+from PIL import Image
+import os
 
-# URL of the logo image
-logo_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Eurowings_Logo.svg"
-# Display the logo
-st.image(logo_url, width=400)
+# Define the path to the images folder
+image_folder = 'images'
+
+# Load local JPEG images from the images folder
+image1 = Image.open(os.path.join(image_folder, 'logo-no-background.png'))
+
+st.image(image1, width=200)
+
+st.write("---")
 
 st.write("### Test different pricing options for Eurowings flights and get an analysis of their respective impacts on market share and revenue.")
 
@@ -54,4 +61,4 @@ with col1:
 with col2:
     st.metric(label="Revenue", value="100 Million", delta="+2%")
 
-    st. write("How will these pricing changes impact the revenue?")
+    st. write("How will these pricing changes impact the revenue per plane?")

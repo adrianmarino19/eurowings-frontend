@@ -1,20 +1,27 @@
 import streamlit as st
 import requests
 from datetime import date
+from PIL import Image
+import os
 
-# URL of the logo image
-logo_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Eurowings_Logo.svg"
-# Display the logo
-st.image(logo_url, width=400)
+# Define the path to the images folder
+image_folder = 'images'
+
+# Load local JPEG images from the images folder
+image1 = Image.open(os.path.join(image_folder, 'logo-no-background.png'))
+
+st.image(image1, width=200)
+
+st.write("---")
 
 st.write("## Competitor Flight Fare Predictions")
 
-st.write("Provide flight details to get price predictions of Eurowings' competitors.")
+st.write("Provide flight details to get price predictions for your competitors' flights.")
 
 st.write("---")
 
 # Create four columns
-col1, col2, col3, col4, col5, col6 = st.columns(6)
+col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
 Origin_Airports = [
  'AAE - Annaba',
  'AAL - Aalborg',
@@ -1195,6 +1202,9 @@ destination_airports = [
  'ZTH - Zakinthos'
 ]
 
+date_input_key1 = 'date_input_1'
+date_input_key2 = 'date_input_2'
+
 # Place text fields in the columns
 with col1:
     text_input_1 = st.selectbox("Origin Airport", Origin_Airports)
@@ -1211,27 +1221,56 @@ with col3:
 
 with col4:
     # Dropdown with options
-    text_input_4 = st.selectbox(
-        "Carrier",
-        ["FR", "U2", "VY", "PC", "W4", "EW", "LH", "W6", "RR", "TK", "A3", "XQ", "TO", "VF", "BA", "LS", "LW", "OS", "W9", "HV"]
+    text_input_4 = st.selectbox("Airline",
+        ["FR - Ryanair",
+        "U2 - easyJet",
+        "VY - Vueling",
+        "PC - Pegasus Airlines",
+        "W4 - Wizz Air Malta",
+        "EW - Eurowings",
+        "LH - Lufthansa",
+        "W6 - Wizz Air",
+        "RR - Buzz (Ryanair Sun)",
+        "TK - Turkish Airlines",
+        "A3 - Aegean Airlines",
+        "XQ - SunExpress",
+        "TO - Transavia France",
+        "VF - Volaris",
+        "BA - British Airways",
+        "LS - Jet2.com",
+        "LW - Lauda Europe",
+        "OS - Austrian Airlines",
+        "W9 - Wizz Air UK",
+        "HV - Transavia"]
     )
 
 with col5:
     text_input_5 = st.date_input(
-        "Date",
+        "Flight Date",
+        key=date_input_key1,
         value=date.today(),  # Default to today's date
         min_value=date(1900, 1, 1),  # Minimum date
         max_value=date(2100, 12, 31)  # Maximum date
     )
+
 with col6:
+    text_input_6 = st.date_input(
+        "Prediction Date",
+        key=date_input_key2,
+        value=date.today(),  # Default to today's date
+        min_value=date(1900, 1, 1),  # Minimum date
+        max_value=date(2100, 12, 31)  # Maximum date
+    )
+
+with col7:
     # Dropdown with options
-    text_input_6 = st.selectbox(
+    text_input_7 = st.selectbox(
         "Trip Type",
         ["ONE WAY", "RETURN"]
     )
 
 # Button
-bt = st.button("Let him cook!")
+bt = st.button("Look into the future! 🔮")
 
 st.write("---")
 
