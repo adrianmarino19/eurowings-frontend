@@ -7,7 +7,7 @@ logo_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Eurowings_Logo.s
 # Display the logo
 st.image(logo_url, width=400)
 
-st.write("## Competitor Flight Fare Predictions")
+st.write("## Competitor Flightaweqf Fare Predictions")
 
 st.write("Provide flight details to get price predictions of Eurowings' competitors.")
 
