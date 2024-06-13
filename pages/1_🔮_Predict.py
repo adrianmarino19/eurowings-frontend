@@ -14,7 +14,7 @@ st.image(image1, width=200)
 
 st.write("---")
 
-st.write("## Competitor Flightaweqf Fare Predictions")
+st.write("## Competitor Flight Fare Predictions")
 
 st.write("Provide flight details to get price predictions for your competitors' flights.")
 
@@ -1210,9 +1210,12 @@ date_input_key2 = 'date_input_2'
 # Place text fields in the columns
 with col1:
     text_input_1 = st.selectbox("Origin Airport", Origin_Airports)
+    #text_input_1 = text_input_1[:3]
+
 
 with col2:
     text_input_2 = st.selectbox("Destination Airport", destination_airports)
+    #text_input_2 = text_input_2[:3]
 
 with col3:
     # Dropdown with options
@@ -1220,6 +1223,8 @@ with col3:
         "Cabin Class",
         ["ECONOMY", "BUSINESS", "PREMIUMECONOMY", "FIRST"]
     )
+    # if text_input_3 == 'Premium Ec'
+    # text_input_3 = text_input_3.
 
 with col4:
     # Dropdown with options
@@ -1244,10 +1249,10 @@ with col6:
 with col7:
     text_input_7 = st.date_input(
         "Prediction Date",
-        key=date_input_key2,
-        value=date.today(),  # Default to today's date
-        min_value=date(1900, 1, 1),  # Minimum date
-        max_value=date(2100, 12, 31)  # Maximum date
+        key = date_input_key2,
+        value = date.today(),  # Default to today's date
+        min_value = date(1900, 1, 1),  # Minimum date
+        max_value = date(2100, 12, 31)  # Maximum date
     )
 
 with col8:
@@ -1297,6 +1302,7 @@ logo_url = "https://1000logos.net/wp-content/uploads/2020/03/Ryanair-Logo.png"  
 airline_name = "Ryanair"
 price = "127 Euro"
 
+
 # Create a table row using HTML without the second column
 html_content = f"""
 <div style='display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;'>
@@ -1313,22 +1319,44 @@ html_content = f"""
 st.markdown(html_content, unsafe_allow_html=True)
 
 
-if text_input_4 and text_input_1 and text_input_2 and text_input_3 and bt:
-
-    base_url = "https://takeoff-image-jy4h6ma67q-ew.a.run.app/"
-    endpoint = "predict"
-
+if text_input_1 and text_input_2 and text_input_3 and text_input_4 and text_input_5 and text_input_6 and text_input_7 and text_input_8 and text_input_9 and bt:
+    BASE_URL = 'http://localhost:8000/'
+    endpoint = 'predict'
     params = {
-        "OriAirp_input": text_input_1,
-        "DestAirp_input": text_input_2,
-        "CabClass_input": text_input_3,
-        "MainCarr_input": text_input_4
+        'origin_air': text_input_1,
+        'dest_air': text_input_2,
+        'cab_class': text_input_3,
+        'trip_type': text_input_4,
+        'is_connected': text_input_5,
+        'trip_len': text_input_6,
+        'search_date': text_input_7,
+        'flight_date': text_input_8,
+        'airline': text_input_9
     }
-
+    
     # Make the GET request
-    response = requests.get(f"{base_url}{endpoint}", params=params)
+    response = requests.get(f'{BASE_URL}{endpoint}', params=params)
 
+    # Print the response
     if response.status_code == 200:
 
         # Print the response
         st.write(response.json()["price"])
+
+    # base_url = "https://takeoff-image-jy4h6ma67q-ew.a.run.app/"
+    # endpoint = "predict"
+
+    # params = {
+    #     "OriAirp_input": text_input_1,
+    #     "DestAirp_input": text_input_2,
+    #     "CabClass_input": text_input_3,
+    #     "MainCarr_input": text_input_4
+    # }
+
+    # # Make the GET request
+    # response = requests.get(f"{base_url}{endpoint}", params=params)
+
+    # if response.status_code == 200:
+
+    #     # Print the response
+    #     st.write(response.json()["price"])
