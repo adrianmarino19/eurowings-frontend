@@ -611,7 +611,6 @@ Origin_Airports = [
  'ZRH - Zurich',
  'ZTH - Zakinthos'
 ]
-Origin_Airports = [i[:3] for i in Origin_Airports]
 
 destination_airports = [
  'AAE - Annaba',
@@ -1202,92 +1201,51 @@ destination_airports = [
  'ZRH - Zurich',
  'ZTH - Zakinthos'
 ]
-destination_airports = [i[:3] for i in destination_airports]
 
 date_input_key1 = 'date_input_1'
 date_input_key2 = 'date_input_2'
 
-# Place text fields in the columns
+
+# Create the first row with three columns
+col1, col2, col3 = st.columns(3)
+
 with col1:
     text_input_1 = st.selectbox("Origin Airport", Origin_Airports)
-    #text_input_1 = text_input_1[:3]
-
-
+    text_input_1 = text_input_1[:3]
 with col2:
     text_input_2 = st.selectbox("Destination Airport", destination_airports)
-    #text_input_2 = text_input_2[:3]
-
+    text_input_2 = text_input_2[:3]
 with col3:
-    # Dropdown with options
-    text_input_3 = st.selectbox(
-        "Cabin Class",
-        ["ECONOMY", "BUSINESS", "PREMIUMECONOMY", "FIRST"]
-    )
-    # if text_input_3 == 'Premium Ec'
-    # text_input_3 = text_input_3.
+    text_input_3 = st.selectbox("Cabin Class", ["ECONOMY", "BUSINESS", "PREMIUMECONOMY", "FIRST"])
+
+# Create the second row with three columns
+col4, col5, col6 = st.columns(3)
 
 with col4:
-    # Dropdown with options
-    text_input_4 = st.selectbox(
-        "Trip Type",
-        ["ONE WAY", "RETURN"]
-    )
-
+    text_input_4 = st.selectbox("Trip Type", ["ONE_WAY", "RETURN"])
 with col5:
-    # Dropdown with options
-    text_input_5 = st.selectbox(
-        "Connection Flight",
-        ["0", "1"]
-    )
-
+    text_input_5 = st.selectbox("Connection Flight", ["0", "1"])
 with col6:
-    # Dropdown with options
-    text_input_6 = st.text_input(
-        "Trip Length",
-    )
+    text_input_6 = st.selectbox("Trip Length", ["1", "2", '3'])
+
+# Create the third row with three columns
+col7, col8, col9 = st.columns(3)
 
 with col7:
-    text_input_7 = st.date_input(
-        "Prediction Date",
-        key = date_input_key2,
-        value = date.today(),  # Default to today's date
-        min_value = date(1900, 1, 1),  # Minimum date
-        max_value = date(2100, 12, 31)  # Maximum date
-    )
-
+    text_input_7 = st.date_input("Prediction Date", key=date_input_key2, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
 with col8:
-    text_input_8 = st.date_input(
-        "Flight Date",
-        key=date_input_key1,
-        value=date.today(),  # Default to today's date
-        min_value=date(1900, 1, 1),  # Minimum date
-        max_value=date(2100, 12, 31)  # Maximum date
-    )
-
+    text_input_8 = st.date_input("Flight Date", key=date_input_key1, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
 with col9:
-    # Dropdown with options
-    text_input_9 = st.selectbox("Airline",
-        ["FR - Ryanair",
-        "U2 - easyJet",
-        "VY - Vueling",
-        "PC - Pegasus Airlines",
-        "W4 - Wizz Air Malta",
-        "EW - Eurowings",
-        "LH - Lufthansa",
-        "W6 - Wizz Air",
-        "RR - Buzz (Ryanair Sun)",
-        "TK - Turkish Airlines",
-        "A3 - Aegean Airlines",
-        "XQ - SunExpress",
-        "TO - Transavia France",
-        "VF - Volaris",
-        "BA - British Airways",
-        "LS - Jet2.com",
-        "LW - Lauda Europe",
-        "OS - Austrian Airlines",
-        "W9 - Wizz Air UK",
-        "HV - Transavia"]
-    )
+    text_input_9 = st.selectbox("Airline", [
+        "FR - Ryanair", "U2 - easyJet", "VY - Vueling", "PC - Pegasus Airlines",
+        "W4 - Wizz Air Malta", "EW - Eurowings", "LH - Lufthansa", "W6 - Wizz Air",
+        "RR - Buzz (Ryanair Sun)", "TK - Turkish Airlines", "A3 - Aegean Airlines",
+        "XQ - SunExpress", "TO - Transavia France", "VF - Volaris", "BA - British Airways",
+        "LS - Jet2.com", "LW - Lauda Europe", "OS - Austrian Airlines", "W9 - Wizz Air UK",
+        "HV - Transavia"
+    ])
+    text_input_9 = text_input_9[:2]
+
 
 # Button
 bt = st.button("Look into the future! 🔮")
@@ -1297,27 +1255,13 @@ st.write("---")
 # Title
 st.write("Predicted flight fare:")
 
-# Define the table data
-logo_url = "https://1000logos.net/wp-content/uploads/2020/03/Ryanair-Logo.png"  # Updated link
-airline_name = "Ryanair"
-price = "127 Euro"
+# Placeholder for the predicted price
+price_placeholder = st.empty()
 
+logo_url = "https://1000logos.net/wp-content/uploads/2020/03/Ryanair-Logo.png"
 
-# Create a table row using HTML without the second column
-html_content = f"""
-<div style='display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;'>
-    <div style='flex: 1; text-align: center;'>
-        <img src='{logo_url}' alt='Ryanair Logo' style='height: 100px; max-width: 100%; object-fit: contain;' />
-    </div>
-    <div style='flex: 1; text-align: center; font-size: 20px; color: green;'>
-        {price}
-    </div>
-</div>
-"""
-
-# Display the table row
-st.markdown(html_content, unsafe_allow_html=True)
-
+# Initialize price variable
+price = "127 Euro"  # Default value
 
 if text_input_1 and text_input_2 and text_input_3 and text_input_4 and text_input_5 and text_input_6 and text_input_7 and text_input_8 and text_input_9 and bt:
     BASE_URL = 'http://localhost:8000/'
@@ -1333,30 +1277,23 @@ if text_input_1 and text_input_2 and text_input_3 and text_input_4 and text_inpu
         'flight_date': text_input_8,
         'airline': text_input_9
     }
-    
+
     # Make the GET request
     response = requests.get(f'{BASE_URL}{endpoint}', params=params)
 
     # Print the response
     if response.status_code == 200:
+        price = f"€ {response.json()['price']}"
 
-        # Print the response
-        st.write(response.json()["price"])
-
-    # base_url = "https://takeoff-image-jy4h6ma67q-ew.a.run.app/"
-    # endpoint = "predict"
-
-    # params = {
-    #     "OriAirp_input": text_input_1,
-    #     "DestAirp_input": text_input_2,
-    #     "CabClass_input": text_input_3,
-    #     "MainCarr_input": text_input_4
-    # }
-
-    # # Make the GET request
-    # response = requests.get(f"{base_url}{endpoint}", params=params)
-
-    # if response.status_code == 200:
-
-    #     # Print the response
-    #     st.write(response.json()["price"])
+    # Display the table row with dynamic price
+    html_content = f"""
+    <div style='display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;'>
+        <div style='flex: 1; text-align: center;'>
+            <img src='{logo_url}' alt='Ryanair Logo' style='height: 100px; max-width: 100%; object-fit: contain;' />
+        </div>
+        <div style='flex: 1; text-align: center; font-size: 20px; color: green;'>
+            {price}
+        </div>
+    </div>
+    """
+    st.markdown(html_content, unsafe_allow_html=True)
