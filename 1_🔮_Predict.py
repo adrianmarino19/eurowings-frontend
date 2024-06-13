@@ -1264,7 +1264,7 @@ logo_url = "https://1000logos.net/wp-content/uploads/2020/03/Ryanair-Logo.png"
 price = "127 Euro"  # Default value
 
 if text_input_1 and text_input_2 and text_input_3 and text_input_4 and text_input_5 and text_input_6 and text_input_7 and text_input_8 and text_input_9 and bt:
-    BASE_URL = 'http://localhost:8000/'
+    BASE_URL = 'https://takeoff-final-image-uh7ydm6w2q-ew.a.run.app/'
     endpoint = 'predict'
     params = {
         'origin_air': text_input_1,
