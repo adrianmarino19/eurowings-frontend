@@ -45,7 +45,7 @@ image1 = Image.open(os.path.join(image_folder, '1.png'))
 
 col1, col2, col3, col4, col5, col6  = st.columns(6)
 with col3:
-    st.image(image1, width=200)
+    st.image(image1, width=275)
 
 # Center the title and subtitle using HTML and CSS
 st.markdown('<h2 class="centered">Flight Price Predictor AI</h2>', unsafe_allow_html=True)
