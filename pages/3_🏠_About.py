@@ -2,15 +2,55 @@ import streamlit as st
 from PIL import Image
 import os
 
+
+# Custom CSS to style the line
+st.markdown(
+    """
+    <style>
+    .red-line {
+        border: 0;
+        height: 2px;
+        background: red;
+        background-image: linear-gradient(to right, red, #ffcccc, red);
+        margin: 10px 0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# # Custom CSS to style the line
+# st.markdown(
+#     """
+#     <style>
+#     .red-line {
+#         border: 0;
+#         height: 2px;
+#         background: red;
+#         margin: 10px 0;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True
+# )
+
+
+#####
 # Define the path to the images folder
 image_folder = 'images'
 
 # Load local JPEG images from the images folder
-image1 = Image.open(os.path.join(image_folder, 'logo-no-background.png'))
+image1 = Image.open(os.path.join(image_folder, '1.png'))
 
-st.image(image1, width=200)
+col1, col2, col3, col4, col5, col6  = st.columns(6)
+with col3:
+    st.image(image1, width=200)
 
-st.write("---")
+# # Center the title and subtitle using HTML and CSS
+# st.markdown('<h2 class="centered">About</h2>', unsafe_allow_html=True)
+
+# Custom colored line
+st.markdown('<hr class="red-line">', unsafe_allow_html=True)
 
 st.write(" ### Our Product & Mission")
 

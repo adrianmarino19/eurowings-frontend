@@ -4,24 +4,60 @@ from datetime import date
 from PIL import Image
 import os
 
+# Custom CSS to style the line
+st.markdown(
+    """
+    <style>
+    .red-line {
+        border: 0;
+        height: 2px;
+        background: red;
+        background-image: linear-gradient(to right, red, #ffcccc, red);
+        margin: 10px 0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# # Custom CSS to style the line
+# st.markdown(
+#     """
+#     <style>
+#     .red-line {
+#         border: 0;
+#         height: 2px;
+#         background: red;
+#         margin: 10px 0;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True
+# )
+
+
+#####
 # Define the path to the images folder
 image_folder = 'images'
 
 # Load local JPEG images from the images folder
-image1 = Image.open(os.path.join(image_folder, 'logo-no-background.png'))
+image1 = Image.open(os.path.join(image_folder, '1.png'))
 
-st.image(image1, width=200)
+col1, col2, col3, col4, col5, col6  = st.columns(6)
+with col3:
+    st.image(image1, width=200)
 
-st.write("---")
+# Center the title and subtitle using HTML and CSS
+st.markdown('<h2 class="centered">Flight Price Predictor AI</h2>', unsafe_allow_html=True)
+st.markdown('<p class="centered">Provide flight details to get price predictions from competitors\' flights.</p>', unsafe_allow_html=True)
 
-st.write("## Competitor Flight Fare Predictions")
+# Custom colored line
+st.markdown('<hr class="red-line">', unsafe_allow_html=True)
 
-st.write("Provide flight details to get price predictions for your competitors' flights.")
-
-st.write("---")
+####
 
 # Create four columns
-col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
+# col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
 
 #### Airports
 OLD_Origin_Airports = [
@@ -1262,9 +1298,9 @@ with col4:
 with col5:
     text_input_5 = st.selectbox("Direct Flight", ["Yes", "No"])
     if text_input_5 == 'Yes':
-        text_input_5 = '0'
-    else:
         text_input_5 = '1'
+    else:
+        text_input_5 = '0'
 with col6:
     text_input_6 = st.number_input("Trip Length", min_value=0, max_value=30, step=1)
 
@@ -1275,7 +1311,7 @@ col7, col8, col9 = st.columns(3)
 with col7:
     text_input_8 = st.date_input("Flight Date", key=date_input_key1, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
 with col8:
-    text_input_7 = st.date_input("Prediction Date", key=date_input_key2, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
+    text_input_7 = st.date_input("Booking Date", key=date_input_key2, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
 with col9:
     text_input_9 = st.selectbox("Airline", [
     'Ryanair (FR)', 'easyJet (U2)', 'Vueling (VY)', 'Pegasus Airlines (PC)',
@@ -1297,14 +1333,38 @@ with col9:
 #Button
 bt = st.button("Look into the future! 🔮")
 
-st.write("---")
+st.markdown('<hr class="red-line">', unsafe_allow_html=True)
+
+# Custom CSS to style the prediction text and the price text
+st.markdown(
+    """
+    <style>
+    .bigger-text {
+        font-size: 24px; /* Adjust the size as needed */
+        text-align: center;
+    }
+    .largest-text {
+        font-size: 36px; /* Adjust the size as needed */
+        font-weight: bold;
+        color: red;
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
-# Create a row with three columns to center the button
-col10, col11, col12, col13, col14, col15, col16  = st.columns(7)
+# # Create a column and apply the custom CSS to the text
+# col13 = st.columns(1)[0]
+# with col13:
+#     st.markdown('<p class="bigger-text">Prediction</p>', unsafe_allow_html=True)
 
-with col13:
-    st.write("Prediction")
+# # Create a row with three columns to center the button
+col10, col11, col12, col13, col14  = st.columns(5)
+
+with col12:
+    st.markdown('<p class="bigger-text">Prediction</p>', unsafe_allow_html=True)
 
 # # Title
 # st.write("Prediction")
@@ -1340,15 +1400,56 @@ if text_input_1 and text_input_2 and text_input_3 and text_input_4 and text_inpu
     if response.status_code == 200:
         price = f"€ {response.json()['price']}"
 
-    # Display the table row with dynamic price
-    html_content = f"""
-    <div style='display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;'>
-        <div style='flex: 1; text-align: center;'>
-            <img src='{logo_url}' alt='Ryanair Logo' style='height: 100px; max-width: 100%; object-fit: contain;' />
-        </div>
-        <div style='flex: 1; text-align: center; font-size: 20px; color: green;'>
-            {price}
-        </div>
-    </div>
+    # Display the price with larger font
+    price_html = f"""
+    <p class="largest-text">{price}</p>
     """
-    st.markdown(html_content, unsafe_allow_html=True)
+    st.markdown(price_html, unsafe_allow_html=True)
+
+    # # Make the GET request
+    # response = requests.get(f'{BASE_URL}{endpoint}', params=params)
+
+    # # Print the response
+    # if response.status_code == 200:
+    #     price = f"€ {response.json()['price']}"
+
+    # # Display the table row with dynamic price
+    # html_content = f"""
+    # <div style='display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;'>
+    #     <div style='flex: 1; text-align: center;'>
+    #         <img src='{logo_url}' alt='Ryanair Logo' style='height: 100px; max-width: 100%; object-fit: contain;' />
+    #     </div>
+    #     <div style='flex: 1; text-align: center; font-size: 20px; color: green;'>
+    #         {price}
+    #     </div>
+    # </div>
+    # """
+    # st.markdown(html_content, unsafe_allow_html=True)
+
+
+
+# Display the app
+# st.title("My Streamlit App")
+
+# App content goes here...
+
+# # Feedback section in the sidebar
+# with st.sidebar:
+#     st.header("What do you think of this app?")
+#     feedback_form = st.form("feedback_form")
+#     like_button = feedback_form.button("Like")
+#     rating = feedback_form.selectbox(
+#         "Rate the app:", ("1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars")
+#     )
+#     feedback_text = feedback_form.text_area("Leave a comment (optional)")
+#     submit_button = feedback_form.form_submit_button("Submit")
+
+# # Process feedback after submission (same as before)
+# if submit_button:
+#     st.success(f"Thank you for your feedback! You liked: {like_button}, Rating: {rating}")
+#     if feedback_text:
+#         st.write(f"Comment: {feedback_text}")
+
+# # Display the last updated date (optional)
+# last_updated = "January 01, 2024"  # Update with actual date
+# st.write(f"Last Updated: {last_updated}")
