@@ -22,7 +22,9 @@ st.write("---")
 
 # Create four columns
 col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
-Origin_Airports = [
+
+#### Airports
+OLD_Origin_Airports = [
  'AAE - Annaba',
  'AAL - Aalborg',
  'AAR - Aarhus',
@@ -612,7 +614,17 @@ Origin_Airports = [
  'ZTH - Zakinthos'
 ]
 
-destination_airports = [
+Origin_Airports = []
+for airport in OLD_Origin_Airports:
+    # Split the string into code and city
+    code, city = airport.split(' - ')
+    # Create the new string in the desired format
+    new_airport = f'{city} ({code})'
+    # Append the new string to the new list
+    Origin_Airports.append(new_airport)
+
+
+old_destination_airports = [
  'AAE - Annaba',
  'AAL - Aalborg',
  'AAR - Aarhus',
@@ -1201,6 +1213,16 @@ destination_airports = [
  'ZRH - Zurich',
  'ZTH - Zakinthos'
 ]
+
+destination_airports = []
+for airport in old_destination_airports:
+    # Split the string into code and city
+    code, city = airport.split(' - ')
+    # Create the new string in the desired format
+    new_airport = f'{city} ({code})'
+    # Append the new string to the new list
+    destination_airports.append(new_airport)
+####
 
 date_input_key1 = 'date_input_1'
 date_input_key2 = 'date_input_2'
@@ -1211,10 +1233,10 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     text_input_1 = st.selectbox("Origin Airport", Origin_Airports)
-    text_input_1 = text_input_1[:3]
+    text_input_1 = text_input_1[-4:-1]
 with col2:
     text_input_2 = st.selectbox("Destination Airport", destination_airports)
-    text_input_2 = text_input_2[:3]
+    text_input_2 = text_input_2[-4:-1]
 with col3:
     text_input_3 = st.selectbox("Cabin Class", ["ECONOMY", "BUSINESS", "PREMIUMECONOMY", "FIRST"])
 
