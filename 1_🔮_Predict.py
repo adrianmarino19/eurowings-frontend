@@ -1227,6 +1227,13 @@ for airport in old_destination_airports:
 date_input_key1 = 'date_input_1'
 date_input_key2 = 'date_input_2'
 
+# Mapping dictionary to convert user-friendly input to the desired string
+cabin_class_mapping = {
+    "Economy": "ECONOMY",
+    "Business": "BUSINESS",
+    "Premium Economy": "PREMIUMECONOMY",
+    "First": "FIRST"
+}
 
 # Create the first row with three columns
 col1, col2, col3 = st.columns(3)
@@ -1238,49 +1245,75 @@ with col2:
     text_input_2 = st.selectbox("Destination Airport", destination_airports)
     text_input_2 = text_input_2[-4:-1]
 with col3:
-    text_input_3 = st.selectbox("Cabin Class", ["ECONOMY", "BUSINESS", "PREMIUMECONOMY", "FIRST"])
+    #text_input_3 = st.selectbox("Cabin Class", ["ECONOMY", "BUSINESS", "PREMIUMECONOMY", "FIRST"])
+    cabin_class = st.selectbox("Cabin Class", list(cabin_class_mapping.keys()))
+    text_input_3 = cabin_class_mapping[cabin_class]
+
 
 # Create the second row with three columns
 col4, col5, col6 = st.columns(3)
 
 with col4:
-    text_input_4 = st.selectbox("Trip Type", ["ONE_WAY", "RETURN"])
+    text_input_4 = st.selectbox("Trip Type", ["One way", "Return"])
+    if text_input_4 == 'One way':
+        text_input_4 = "ONE_WAY"
+    else:
+        text_input_4 = 'RETURN'
 with col5:
-    text_input_5 = st.selectbox("Connection Flight", ["0", "1"])
+    text_input_5 = st.selectbox("Direct Flight", ["Yes", "No"])
+    if text_input_5 == 'Yes':
+        text_input_5 = '0'
+    else:
+        text_input_5 = '1'
 with col6:
-    text_input_6 = st.selectbox("Trip Length", ["1", "2", '3'])
+    text_input_6 = st.number_input("Trip Length", min_value=0, max_value=30, step=1)
+
 
 # Create the third row with three columns
 col7, col8, col9 = st.columns(3)
 
 with col7:
-    text_input_7 = st.date_input("Prediction Date", key=date_input_key2, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
-with col8:
     text_input_8 = st.date_input("Flight Date", key=date_input_key1, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
+with col8:
+    text_input_7 = st.date_input("Prediction Date", key=date_input_key2, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
 with col9:
     text_input_9 = st.selectbox("Airline", [
-        "FR - Ryanair", "U2 - easyJet", "VY - Vueling", "PC - Pegasus Airlines",
-        "W4 - Wizz Air Malta", "EW - Eurowings", "LH - Lufthansa", "W6 - Wizz Air",
-        "RR - Buzz (Ryanair Sun)", "TK - Turkish Airlines", "A3 - Aegean Airlines",
-        "XQ - SunExpress", "TO - Transavia France", "VF - Volaris", "BA - British Airways",
-        "LS - Jet2.com", "LW - Lauda Europe", "OS - Austrian Airlines", "W9 - Wizz Air UK",
-        "HV - Transavia"
+    'Ryanair (FR)', 'easyJet (U2)', 'Vueling (VY)', 'Pegasus Airlines (PC)',
+    'Wizz Air Malta (W4)', 'Eurowings (EW)', 'Lufthansa (LH)', 'Wizz Air (W6)',
+    'Buzz (Ryanair Sun) (RR)', 'Turkish Airlines (TK)', 'Aegean Airlines (A3)',
+    'SunExpress (XQ)', 'Transavia France (TO)', 'Volaris (VF)', 'British Airways (BA)',
+    'Jet2.com (LS)', 'Lauda Europe (LW)', 'Austrian Airlines (OS)', 'Wizz Air UK (W9)',
+    'Transavia (HV)'
     ])
-    text_input_9 = text_input_9[:2]
+    text_input_9 = text_input_9[-3:-1]
 
 
-# Button
+# # Create a row with three columns to center the button
+# col10, col11, col12 = st.columns(3)
+
+# with col11:
+#     bt = st.button("Look into the future! 🔮")
+
+#Button
 bt = st.button("Look into the future! 🔮")
 
 st.write("---")
 
-# Title
-st.write("Predicted flight fare:")
+
+# Create a row with three columns to center the button
+col10, col11, col12, col13, col14, col15, col16  = st.columns(7)
+
+with col13:
+    st.write("Prediction")
+
+# # Title
+# st.write("Prediction")
 
 # Placeholder for the predicted price
 price_placeholder = st.empty()
 
-logo_url = "https://1000logos.net/wp-content/uploads/2020/03/Ryanair-Logo.png"
+
+logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/49/Easyjet_com_Logo.svg"
 
 # Initialize price variable
 price = "127 Euro"  # Default value
