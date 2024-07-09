@@ -1314,11 +1314,11 @@ with col8:
     text_input_7 = st.date_input("Booking Date", key=date_input_key2, value=date.today(), min_value=date(1900, 1, 1), max_value=date(2100, 12, 31))
 with col9:
     text_input_9 = st.selectbox("Airline", [
-    'Ryanair (FR)', 'easyJet (U2)', 'Vueling (VY)', 'Pegasus Airlines (PC)',
-    'Wizz Air Malta (W4)', 'Eurowings (EW)', 'Lufthansa (LH)', 'Wizz Air (W6)',
+    'Ryanair (FR)', 'easyJet (U2)', 'Condor (DE)', 'Vueling (VY)', 'TUI Airways (BY)', 'Pegasus Airlines (PC)',
+    'Wizz Air Malta (W4)', 'Eurowings (EW)', 'Wizz Air (W6)',
     'Buzz (Ryanair Sun) (RR)', 'Turkish Airlines (TK)', 'Aegean Airlines (A3)',
     'SunExpress (XQ)', 'Transavia France (TO)', 'Volaris (VF)', 'British Airways (BA)',
-    'Jet2.com (LS)', 'Lauda Europe (LW)', 'Austrian Airlines (OS)', 'Wizz Air UK (W9)',
+    'Jet2.com (LS)', 'Lauda Europe (LW)', 'Wizz Air UK (W9)',
     'Transavia (HV)'
     ])
     text_input_9 = text_input_9[-3:-1]
@@ -1376,7 +1376,9 @@ price_placeholder = st.empty()
 logo_url = "https://upload.wikimedia.org/wikipedia/commons/4/49/Easyjet_com_Logo.svg"
 
 # Initialize price variable
-price = "127 Euro"  # Default value
+price = "xxx Euro"  # Default value
+
+# ---
 
 if text_input_1 and text_input_2 and text_input_3 and text_input_4 and text_input_5 and text_input_6 and text_input_7 and text_input_8 and text_input_9 and bt:
     BASE_URL = 'https://takeoff-final-image-uh7ydm6w2q-ew.a.run.app/'
@@ -1396,15 +1398,22 @@ if text_input_1 and text_input_2 and text_input_3 and text_input_4 and text_inpu
     # Make the GET request
     response = requests.get(f'{BASE_URL}{endpoint}', params=params)
 
-    # Print the response
+    # Check the response status and process the price
     if response.status_code == 200:
-        price = f"€ {response.json()['price']}"
+        price = response.json()['price']
+        rounded_price = round(float(price), 2)
+        formatted_price = f"€ {rounded_price:.2f}"
 
-    # Display the price with larger font
-    price_html = f"""
-    <p class="largest-text">{price}</p>
-    """
-    st.markdown(price_html, unsafe_allow_html=True)
+        # Display the price with larger font
+        price_html = f"""
+        <p class="largest-text">{formatted_price}</p>
+        """
+        st.markdown(price_html, unsafe_allow_html=True)
+else:
+    # Display default price if conditions are not met
+    st.markdown(f'<p class="largest-text">{price}</p>', unsafe_allow_html=True)
+
+# ---
 
     # # Make the GET request
     # response = requests.get(f'{BASE_URL}{endpoint}', params=params)
